@@ -72,7 +72,24 @@ export default function Opportunities() {
       <p className="mt-6 text-sm text-ink-500">{filtered.length} opportunit{filtered.length === 1 ? "y" : "ies"}</p>
 
       {filtered.length === 0 ? (
-        <EmptyState icon={Briefcase} title="No opportunities match your filters" description="Try a different search term or clear a filter." className="mt-4" />
+        <EmptyState
+          icon={Briefcase}
+          title="No opportunities match your filters"
+          description="Try a different search term, or clear your filters to see everything again."
+          className="mt-4"
+          action={
+            <button
+              onClick={() => {
+                setQuery("");
+                setType(null);
+                setRemoteOnly(false);
+              }}
+              className="focus-ring text-sm font-medium text-brand-600 hover:text-brand-700"
+            >
+              Clear all filters
+            </button>
+          }
+        />
       ) : (
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((o) => (

@@ -28,9 +28,9 @@ export function ResourceCard({
   onToggleComplete?: () => void;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-ink-200 bg-white p-3.5">
+    <div className="flex items-start gap-3 rounded-lg bg-white p-3.5 shadow-[0_0_0_1px_rgb(20_17_13_/_0.05)]">
       {onToggleComplete && (
-        <button onClick={onToggleComplete} className="focus-ring mt-0.5 shrink-0 text-ink-300 hover:text-brand-600" aria-label="Mark resource complete">
+        <button onClick={onToggleComplete} className="focus-ring -m-2 shrink-0 rounded-full p-2 text-ink-300 transition-transform duration-150 hover:text-brand-600 active:scale-90" aria-label="Mark resource complete">
           {completed ? <CheckCircle2 className="h-5 w-5 text-emerald-500" /> : <Circle className="h-5 w-5" />}
         </button>
       )}

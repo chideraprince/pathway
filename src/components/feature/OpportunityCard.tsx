@@ -3,17 +3,8 @@ import { MapPin, CalendarClock, ArrowUpRight } from "lucide-react";
 import type { Opportunity } from "@/types";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { formatDeadline, daysUntil } from "@/lib/format";
+import { formatDeadline, daysUntil, opportunityTypeTone } from "@/lib/format";
 import { cn } from "@/lib/cn";
-
-const typeTone: Record<Opportunity["type"], "brand" | "amber" | "emerald" | "rose" | "ink"> = {
-  Internship: "brand",
-  Scholarship: "emerald",
-  Fellowship: "amber",
-  "Graduate Role": "ink",
-  Competition: "rose",
-  "Bootcamp/Program": "brand",
-};
 
 export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
   const days = daysUntil(opportunity.deadline);
@@ -21,7 +12,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
     <Card hoverable className="relative flex flex-col p-5">
       <Link to={`/opportunities/${opportunity.id}`} className="focus-ring absolute inset-0 rounded-2xl" aria-label={opportunity.title} />
       <div className="flex items-start justify-between gap-2">
-        <Badge tone={typeTone[opportunity.type]}>{opportunity.type}</Badge>
+        <Badge tone={opportunityTypeTone[opportunity.type]}>{opportunity.type}</Badge>
         {days > 0 && days <= 14 && <Badge tone="rose">Closing soon</Badge>}
       </div>
       <h3 className="mt-3 text-base font-semibold leading-snug text-ink-900">{opportunity.title}</h3>

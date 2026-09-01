@@ -10,8 +10,11 @@ import { stageProgressPercentage } from "@/lib/personalization";
 import { ResourceCard } from "./ResourceCard";
 import { cn } from "@/lib/cn";
 
-const actionTone: Record<string, "brand" | "amber" | "emerald" | "ink"> = {
-  Learn: "brand",
+// "brand" (the brass accent) is reserved for the one recommended-step
+// marker below — an action-type label repeats too often per screen to
+// carry the same accent without diluting it, so these stay categorical/neutral.
+const actionTone: Record<string, "amber" | "emerald" | "ink"> = {
+  Learn: "ink",
   Practice: "amber",
   Build: "emerald",
   Complete: "ink",
@@ -91,14 +94,14 @@ export function PathwayStageAccordion({
                       <div
                         key={step.id}
                         className={cn(
-                          "rounded-xl border p-4",
-                          isHighlighted ? "border-brand-300 bg-brand-50/40" : "border-ink-100 bg-ink-50/40"
+                          "rounded-xl border-l-2 p-4",
+                          isHighlighted ? "border-l-brand-500 bg-brand-50/40" : "border-l-transparent bg-ink-50/60"
                         )}
                       >
                         <div className="flex items-start gap-3">
                           <button
                             onClick={() => onToggleStep(step.id)}
-                            className="focus-ring mt-0.5 shrink-0 text-ink-300 hover:text-brand-600"
+                            className="focus-ring -m-3 shrink-0 rounded-full p-3 text-ink-300 transition-transform duration-150 hover:text-brand-600 active:scale-90"
                             aria-label="Mark step complete"
                           >
                             {done ? <CheckCircle2 className="h-5 w-5 text-emerald-500" /> : <Circle className="h-5 w-5" />}

@@ -8,7 +8,7 @@ import { CareerCard } from "@/components/feature/CareerCard";
 import { opportunityById } from "@/data/opportunities";
 import { careersByIds } from "@/data/careers";
 import { skillById } from "@/data/skills";
-import { formatDeadline, daysUntil } from "@/lib/format";
+import { formatDeadline, daysUntil, opportunityTypeTone } from "@/lib/format";
 
 export default function OpportunityDetail() {
   const { id } = useParams();
@@ -24,7 +24,7 @@ export default function OpportunityDetail() {
 
       <div className="mt-5">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge tone="brand">{opportunity.type}</Badge>
+          <Badge tone={opportunityTypeTone[opportunity.type]}>{opportunity.type}</Badge>
           {days > 0 && days <= 14 && <Badge tone="rose">Closing in {days} day{days === 1 ? "" : "s"}</Badge>}
         </div>
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">{opportunity.title}</h1>

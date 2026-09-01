@@ -5,7 +5,7 @@ import { LinkButton, Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SkillBadge } from "@/components/ui/SkillBadge";
-import { ProjectionChart } from "@/components/feature/ProjectionChart";
+import { ProjectionChart, describeTrend } from "@/components/feature/ProjectionChart";
 import { DataTrustNote } from "@/components/feature/DataTrustNote";
 import { PathwayPreview } from "@/components/feature/PathwayPreview";
 import { CareerCard } from "@/components/feature/CareerCard";
@@ -94,7 +94,7 @@ export default function CareerProfile() {
       <section className="mt-10">
         <Card className="p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-lg font-semibold text-ink-900">Career demand projection</h2>
+            <h2 className="text-lg font-semibold text-ink-900">{describeTrend(career.projection)}</h2>
             <span className="text-xs text-ink-400">2026 → 2035</span>
           </div>
           <ProjectionChart data={career.projection} />

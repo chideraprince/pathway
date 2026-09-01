@@ -33,10 +33,10 @@ export function CareerCard({ career, compact }: { career: Career; compact?: bool
         <Badge tone="ink">{career.category}</Badge>
         <button
           onClick={onSave}
-          className="focus-ring relative z-10 rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+          className="focus-ring relative z-10 -m-1.5 rounded-lg p-2.5 text-ink-400 transition-transform duration-150 hover:bg-ink-100 hover:text-ink-700 active:scale-90"
           aria-label={saved ? "Unsave career" : "Save career"}
         >
-          <Bookmark className={cn("h-4 w-4", saved && "fill-brand-600 text-brand-600")} />
+          <Bookmark className={cn("h-4 w-4 transition-transform duration-150", saved && "fill-brand-600 text-brand-600 scale-110")} />
         </button>
       </div>
 
