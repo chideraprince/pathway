@@ -1,5 +1,17 @@
 import type { BadgeTone } from "@/components/ui/Badge";
-import type { Demand, Growth } from "@/types";
+import type { Demand, Growth, OpportunityType } from "@/types";
+
+// None of these use "brand" — the accent is reserved for actions/selection,
+// and a type badge like this repeats on every card in a results grid, which
+// would blow the accent budget fast if it carried the one loaded color.
+export const opportunityTypeTone: Record<OpportunityType, BadgeTone> = {
+  Internship: "ink",
+  Scholarship: "emerald",
+  Fellowship: "amber",
+  "Graduate Role": "ink",
+  Competition: "rose",
+  "Bootcamp/Program": "ink",
+};
 
 export const demandLabel: Record<Demand, string> = {
   emerging: "Emerging",
@@ -9,11 +21,14 @@ export const demandLabel: Record<Demand, string> = {
   competitive: "Competitive",
 };
 
+// Same rule as opportunityTypeTone: "high-demand" is the most common value
+// in the dataset, so it can't carry the accent without the accent stopping
+// to mean anything — it shares emerald's "good news" family instead.
 export const demandTone: Record<Demand, BadgeTone> = {
   emerging: "amber",
   growing: "emerald",
   stable: "ink",
-  "high-demand": "brand",
+  "high-demand": "emerald",
   competitive: "rose",
 };
 

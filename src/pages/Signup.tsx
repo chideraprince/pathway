@@ -23,7 +23,7 @@ export default function Signup() {
     e.preventDefault();
     signup({ name: name || "New Student", email: email || "student@example.com" });
     updateEducation({ fieldOfStudy, level: educationLevel });
-    push("Account created — welcome to Pathway!", "success");
+    push("Account created", "success");
     navigate("/dashboard");
   };
 

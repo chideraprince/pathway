@@ -3,12 +3,12 @@ import { LinkButton } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { CareerCard } from "@/components/feature/CareerCard";
 import { OpportunityCard } from "@/components/feature/OpportunityCard";
-import { ProjectionChart } from "@/components/feature/ProjectionChart";
+import { ProjectionChart, describeTrend } from "@/components/feature/ProjectionChart";
 import { PathwayPreview } from "@/components/feature/PathwayPreview";
 import { careers, careerById } from "@/data/careers";
 import { opportunities } from "@/data/opportunities";
 import { pathwayByCareerId } from "@/data/pathways";
-import { demandLabel, formatSalary } from "@/lib/format";
+import { demandLabel, demandTone, formatSalary } from "@/lib/format";
 
 const featured = careers.filter((c) => c.featured).slice(0, 4);
 const exampleCareer = careerById("product-designer")!;
@@ -23,10 +23,12 @@ export default function Landing() {
         <div className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:py-28">
           <div>
             <Badge tone="brand">Career projection & roadmap platform</Badge>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink-900 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
-              Know where you're going.
+            <h1 className="mt-5 text-[2.75rem] font-semibold tracking-tight text-ink-900 sm:text-6xl lg:text-[4rem]">
+              Know where
               <br />
-              Know how to get there.
+              you're going.
+              <br />
+              <span className="text-brand-600">Know how to get there.</span>
             </h1>
             <p className="mt-5 max-w-lg text-lg text-ink-600">
               Explore careers, see where they're headed, discover the skills you need, and build a personalized pathway to get there.
@@ -47,7 +49,7 @@ export default function Landing() {
                   <p className="text-xs font-medium uppercase tracking-wide text-ink-400">Career snapshot</p>
                   <h3 className="mt-0.5 text-lg font-semibold text-ink-900">{exampleCareer.title}</h3>
                 </div>
-                <Badge tone="brand">{demandLabel[exampleCareer.demand]}</Badge>
+                <Badge tone={demandTone[exampleCareer.demand]}>{demandLabel[exampleCareer.demand]}</Badge>
               </div>
               <ProjectionChart data={exampleCareer.projection} />
               <div className="grid grid-cols-2 gap-3 border-t border-ink-100 pt-4">
@@ -69,28 +71,39 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* How it works */}
+      {/* How it works — a route, not a grid of cards */}
       <section className="container-page py-16 sm:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-ink-900">How Pathway works</h2>
-          <p className="mt-3 text-ink-600">From vague ambition to concrete next step, in four parts.</p>
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-ink-900">How Pathway works</h2>
+          <p className="mt-3 text-ink-600">From vague ambition to concrete next step, in four legs.</p>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { icon: Search, title: "Explore careers", desc: "Browse realistic career profiles with clear demand and growth outlooks." },
-            { icon: ClipboardCheck, title: "Assess your skills", desc: "A short assessment shows what you already have and what's missing." },
-            { icon: Route, title: "Build a pathway", desc: "Get a personalized, staged roadmap from foundations to job-ready." },
-            { icon: Rocket, title: "Track & discover", desc: "Track progress, follow curated resources, and find relevant opportunities." },
-          ].map((s, i) => (
-            <div key={s.title} className="relative rounded-2xl border border-ink-200 bg-white p-6">
-              <span className="absolute right-5 top-5 text-xs font-semibold text-ink-300">0{i + 1}</span>
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                <s.icon className="h-5 w-5" />
+        <div className="relative mt-14">
+          <div
+            className="absolute left-0 right-0 top-6 hidden h-px lg:block"
+            style={{ backgroundImage: "repeating-linear-gradient(to right, var(--color-brand-300) 0 8px, transparent 8px 16px)" }}
+            aria-hidden
+          />
+          <div className="grid gap-10 lg:grid-cols-4 lg:gap-6">
+            {[
+              { icon: Search, title: "Explore", desc: "Browse realistic career profiles with clear demand and growth outlooks." },
+              { icon: ClipboardCheck, title: "Assess", desc: "A short assessment shows what you already have and what's missing." },
+              { icon: Route, title: "Build", desc: "Get a personalized, staged roadmap from foundations to job-ready." },
+              { icon: Rocket, title: "Track", desc: "Follow curated resources, mark steps complete, and find relevant opportunities." },
+            ].map((s, i) => (
+              <div key={s.title} className="relative flex gap-4 lg:flex-col lg:gap-0">
+                <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-brand-300 bg-ink-50 text-brand-700">
+                  <s.icon className="h-5 w-5" />
+                </span>
+                <div className="lg:mt-5">
+                  <p className="flex items-baseline gap-2">
+                    <span className="font-display text-lg font-semibold text-ink-900">{s.title}</span>
+                    <span className="text-xs font-medium text-ink-400">leg 0{i + 1}</span>
+                  </p>
+                  <p className="mt-1 max-w-[22ch] text-sm text-ink-500">{s.desc}</p>
+                </div>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-ink-900">{s.title}</h3>
-              <p className="mt-1.5 text-sm text-ink-500">{s.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -100,7 +113,7 @@ export default function Landing() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <Badge tone="brand">Career exploration</Badge>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">Careers worth knowing about</h2>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink-900">Careers worth knowing about</h2>
               <p className="mt-2 max-w-xl text-ink-600">17 curated career profiles across technology, business, creative and emerging fields.</p>
             </div>
             <LinkButton variant="outline" to="/careers">Browse all careers <ArrowRight className="h-4 w-4" /></LinkButton>
@@ -118,7 +131,7 @@ export default function Landing() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <Badge tone="brand">Career projections</Badge>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">See where a career is headed, not just where it stands today</h2>
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink-900">See where a career is headed, not just where it stands today</h2>
             <p className="mt-4 text-ink-600">
               Every career profile includes an indicative demand outlook from 2026 through 2035, alongside salary ranges and remote-work
               potential — so you can weigh a decision against the future, not just the present.
@@ -136,9 +149,12 @@ export default function Landing() {
             </p>
           </div>
           <div className="rounded-2xl border border-ink-200 bg-white p-6 shadow-[var(--shadow-card)]">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-ink-900">AI/ML Engineer — demand outlook</h3>
-              <TrendingUp className="h-4 w-4 text-emerald-500" />
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-wide text-ink-400">AI/ML Engineer</p>
+                <h3 className="mt-0.5 font-semibold text-ink-900">{describeTrend(careerById("ai-ml-engineer")!.projection)}</h3>
+              </div>
+              <TrendingUp className="h-4 w-4 shrink-0 text-emerald-500" />
             </div>
             <ProjectionChart data={careerById("ai-ml-engineer")!.projection} />
           </div>
@@ -150,7 +166,7 @@ export default function Landing() {
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
             <Badge tone="brand">Personalized pathways</Badge>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">A guided journey, not a static checklist</h2>
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink-900">A guided journey, not a static checklist</h2>
             <p className="mt-3 text-ink-600">Every career comes with a staged roadmap from foundations to job-ready — here's what it looks like for a Product Designer.</p>
           </div>
           <div className="mt-10 overflow-x-auto pb-2">
@@ -192,7 +208,7 @@ export default function Landing() {
           </div>
           <div className="order-1 lg:order-2">
             <Badge tone="brand">Skill gap assessment</Badge>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">Understand your gap before you spend months closing it</h2>
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink-900">Understand your gap before you spend months closing it</h2>
             <p className="mt-4 text-ink-600">
               A short, 5-8 question assessment compares your current skills against a career's requirements — then shows you exactly where
               to start, not just what's missing.
@@ -207,7 +223,7 @@ export default function Landing() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <Badge tone="brand">Opportunities</Badge>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-900">Turn your pathway into next steps</h2>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink-900">Turn your pathway into next steps</h2>
               <p className="mt-2 max-w-xl text-ink-600">Internships, scholarships, fellowships and graduate roles, filtered against your pathway.</p>
             </div>
             <LinkButton variant="outline" to="/opportunities">View all opportunities <ArrowRight className="h-4 w-4" /></LinkButton>
@@ -227,11 +243,11 @@ export default function Landing() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
               <Compass className="h-6 w-6" />
             </div>
-            <h2 className="mt-5 text-3xl font-bold tracking-tight text-white">Stop guessing. Start building your pathway.</h2>
+            <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight text-white">Stop guessing. Start building your pathway.</h2>
             <p className="mt-3 text-ink-300">Explore 17 careers, see where they're heading, and get a personalized roadmap — free, no account required.</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <LinkButton size="lg" to="/careers">Explore Careers <ArrowRight className="h-4 w-4" /></LinkButton>
-              <LinkButton size="lg" variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10" to="/assessment">Build My Pathway</LinkButton>
+              <LinkButton size="lg" variant="outline-light" to="/assessment">Build My Pathway</LinkButton>
             </div>
           </div>
         </div>
